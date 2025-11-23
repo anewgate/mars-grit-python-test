@@ -152,6 +152,42 @@ if __name__ == '__main__':
             time.sleep(0.02)
 
         print("회전 완료")
+
+        """The following code is applied to
+        DC motor control
+        """
+        # 후방 DC 모터
+        pwm.setServoPulse(pca9685.DC_MOTOR_PWM1,15000) # for TB6612 set speed
+        # CCW
+        pwm.setServoPulse(pca9685.DC_MOTOR_INA1,0) # set INA1 L
+        pwm.setServoPulse(pca9685.DC_MOTOR_INA2,19999) # set INA2 H
+        print("M1 rotate")
+        time.sleep(2)
+        # CW
+        pwm.setServoPulse(pca9685.DC_MOTOR_INA1,19999) # set INA1 H
+        pwm.setServoPulse(pca9685.DC_MOTOR_INA2,0) # set INA2 L
+        print("M1 rotate opposite")
+        time.sleep(2)
+        pwm.setServoPulse(pca9685.DC_MOTOR_PWM1,0) # for TB6612 set speed to 0, stop
+        print("M1 stop")
+        time.sleep(2)
+
+        # 전방 DC 모터
+        pwm.setServoPulse(pca9685.DC_MOTOR_PWM2,15000) # for TB6612 set speed
+        # CCW
+        pwm.setServoPulse(pca9685.DC_MOTOR_INB1,0) # set INA1 L
+        pwm.setServoPulse(pca9685.DC_MOTOR_INB2,19999) # set INA2 H
+        print("M2 rotate")
+        time.sleep(2)
+        # CW
+        pwm.setServoPulse(pca9685.DC_MOTOR_INB1,19999) # set INA1 H
+        pwm.setServoPulse(pca9685.DC_MOTOR_INB2,0) # set INA2 L
+        print("M2 rotate opposite")
+        time.sleep(2)
+        pwm.setServoPulse(pca9685.DC_MOTOR_PWM2,0) # for TB6612 set speed to 0, stop
+        print("M2 stop")
+        time.sleep(2)
+
     except KeyboardInterrupt:
         # Ctrl+C로 중단 시 모터 신호 끄기 (선택사항)
         pwm.setPWM(target_channel3, 0, 0)
